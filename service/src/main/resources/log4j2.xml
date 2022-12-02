@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn" monitorInterval="5">
+    <!-- This filter is used to generally enable TRACE logging if "x-debug-enabled" in the ThreadContext has the value "true" -->
+    <DynamicThresholdFilter key="x-debug-enabled" onMatch="ACCEPT" onMismatch="NEUTRAL">
+        <KeyValuePair key="true" value="DEBUG"/>
+    </DynamicThresholdFilter>
+
+    <LogMetricsFilter/>
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%d{ISO8601}] [%level] [%t] [%logger{36}] [%X{x-acs-locale}] [%X{x-acs-ipaddress}] [%msg]%n"/>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <logger name = "org.hibernate" level = "${org.hibernate.level:-INFO}" additivity="false">
+            <AppenderRef ref="Console" />
+        </logger>
+        <logger name = "org.springframework" level = "${org.springframework.level:-INFO}" additivity="false">
+            <AppenderRef ref="Console" />
+        </logger>
+
+        <logger name="org.apache.kafka" level="OFF">
+            <AppenderRef ref="Console" />
+        </logger>
+
+        <logger name="com.foresee.platform.logging.audit" level="OFF">
+            <AppenderRef ref="Console" />
+        </logger>
+
+        <logger name="com.foresee.platform.eventbus.client.impl" level="OFF">
+            <AppenderRef ref="Console" />
+        </logger>
+
+        <logger name="EventLogger" level="OFF">
+            <AppenderRef ref="Console" />
+        </logger>
+
+        <logger name="com.netflix.discovery.DiscoveryClient" level="ERROR">
+            <AppenderRef ref="Console" />
+        </logger>
+
+        <logger name="com.netflix.discovery.shared.resolver.aws.ConfigClusterResolver" level="ERROR">
+            <AppenderRef ref="Console" />
+        </logger>
+
+        <logger name="com.foresee.platform.hierarchy.graph" level="DEBUG">
+            <AppenderRef ref="Console" />
+        </logger>
+    </Loggers>
+</Configuration>

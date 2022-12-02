@@ -1,0 +1,44 @@
+spring:
+  application:
+    name: hierarchy-graph-maker
+  jmx:
+    default-domain: ${spring.application.name}
+  config:
+    import: configserver:${PLATFORM_CONFIG_SERVER_URI:http://dev-config-server.foresee.com/platform-config-server}
+#  cloud:
+#    config:
+#      fail-fast: true
+#      username: config-server-user
+#      password: secret
+#  security:
+#    user:
+#      name: config-server-user
+#      password: secret
+
+#    server:
+#      git:
+#        uri: ${PLATFORM_CONFIG_SERVER_URI:http://dev-config-server.foresee.com/platform-config-server}
+#        skipSslValidation: true
+#        username: config-server-user
+#        password: secret
+#  cloud:
+#    config:
+#      enabled: false
+#      import-check.enabled: false
+
+server:
+  servlet:
+    contextPath: /${spring.application.name}
+
+management:
+  endpoint:
+    health:
+      show-details: "ALWAYS"
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+## fixme
+logging:
+  config: classpath:log4j2-aws.xml

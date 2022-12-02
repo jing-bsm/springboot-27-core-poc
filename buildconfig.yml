@@ -1,0 +1,43 @@
+apps:
+  - appName: hierarchy-graph-maker
+    sourceDir: "hierarchy-graph-maker-service/target/code-deploy/"
+#    swaggerLocation: "hierarchy-graph-maker-service/target/swagger/hierarchy-graph-maker.json"
+versions:
+  release: "${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}"
+  milestone: "${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}-M${parsedVersion.buildNumber}"
+  milestoneSnapshot: "${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}-${parsedVersion.nextBuildNumber}-SNAPSHOT"
+  nextDevelopVersion: "${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.nextIncrementalVersion}-SNAPSHOT"
+config:
+  deployment:
+    defaults:
+      developToDev: true
+      developToQal: true
+      releaseToQal: false
+      releaseToStg: false
+  tests:
+    api:
+      qalEnabled: false
+      stgEnabled: false
+      suiteName: Hierarchy_Graph_Maker_Tests
+  params:
+    build: "-P build"
+    test: "-P integration-test,jenkins"
+    snapshot: "-P deploy-only"
+    release: "-P deploy-only"
+  blackDuck:
+    projectName: hierarchy-graph-maker
+  veracode:
+    applicationName: "hierarchy-graph-maker"
+    sandbox: Hierarchy
+    s3Folder: hierarchy
+  slack:
+    attention: hierarchy-team
+  jacoco:
+    changeBuildStatus: true
+    minimumBranchCoverage: "0"
+    minimumClassCoverage: "0"
+    minimumLineCoverage: "0"
+    minimumMethodCoverage: "0"
+    exclusionPattern: "**/core/**/*.class,**/config/**/*.class,**/domain/*.class,**/entity/*.class,**/repository/*.class,**/exceptions/*.class,**/logging/*.class"
+
+awsprofile: dev
