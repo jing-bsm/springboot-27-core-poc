@@ -1,10 +1,34 @@
 spring:
+  bootstrap:
+    enabled: true
   application:
     name: hierarchy-graph-maker
   jmx:
     default-domain: ${spring.application.name}
   config:
-    import: configserver:${PLATFORM_CONFIG_SERVER_URI:http://dev-config-server.foresee.com/platform-config-server}
+    import: vault://
+  cloud:
+    aws:
+      stack:
+        auto: false
+    bootstrap:
+      enabled: true
+    vault:
+      kv:
+        enabled: true
+        backend: cxsuite
+        backendVersion: 1
+        profile-separator: '/'
+        default-context: common-secrets/qal
+        application-name: hierarchy-graph-maker/qal
+      enabled: true
+      host: dev-vault.aws.foreseeresults.com
+      port: 8200
+      scheme: http
+      authentication: APPROLE
+      app-role:
+        role-id: ${VAULT_ROLE_ID}
+        secret-id: ${VAULT_SECRET_ID}
 #  cloud:
 #    config:
 #      fail-fast: true
@@ -26,6 +50,11 @@ spring:
 #      enabled: false
 #      import-check.enabled: false
 
+#app:
+#  vault-paths:
+#    - cxsuite/common-secrets/qal
+#    - cxsuite/${spring.application.name}/qal
+
 server:
   servlet:
     contextPath: /${spring.application.name}
@@ -41,4 +70,7 @@ management:
 
 ## fixme
 logging:
-  config: classpath:log4j2-aws.xml
+#  config: classpath:log4j2-aws.xml
+
+  level:
+    root: INFO
