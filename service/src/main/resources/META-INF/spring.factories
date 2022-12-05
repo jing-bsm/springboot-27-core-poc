@@ -1,0 +1,3 @@
+#org.springframework.cloud.bootstrap.BootstrapConfiguration=\
+# com.poc.sb.controller.VaultConfig,\
+# com.poc.sb.controller.VaultConfig.AppVaultPaths

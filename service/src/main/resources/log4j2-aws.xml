@@ -8,7 +8,7 @@
         <Property name="KAFKA_METADATA_MAX_AGE">300000</Property>
         <Property name="KAFKA_RECONNECT_BACKOFF">50</Property>
         <Property name="KAFKA_MAX_BLOCK">60000</Property>
-        <Property name="SPRING_VAULT_LOG_LEVEL">INFO</Property>
+        <Property name="SPRING_VAULT_LOG_LEVEL">DEBUG</Property>
         <Property name="EXTERNAL_LIBRARY_LOG_LEVEL">ERROR</Property>
         <Property name="FORESEE_LIBRARY_LOG_LEVEL">ERROR</Property>
         <Property name="SERVICE_LOG_LEVEL">DEBUG</Property>

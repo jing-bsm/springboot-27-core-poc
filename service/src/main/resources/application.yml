@@ -1,10 +1,49 @@
 spring:
+  bootstrap:
+    enabled: true
   application:
     name: hierarchy-graph-maker
   jmx:
     default-domain: ${spring.application.name}
   config:
-    import: configserver:${PLATFORM_CONFIG_SERVER_URI:http://dev-config-server.foresee.com/platform-config-server}
+    import: vault://
+#  VAULT_ROLE_ID=c95ba689-e397-0200-6edd-6f3826a0fa7c
+#  VAULT_SECRET_ID=08c5e486-c1d9-7720-707d-475f41f89eea
+#  VAULT_URI=http://dev-vault.aws.foreseeresults.com:8200
+  cloud:
+    aws:
+      stack:
+        auto: false
+    bootstrap:
+      enabled: true
+    vault:
+#      reactive:
+#        enabled: false
+      kv:
+        enabled: true
+        backend: cxsuite
+        backendVersion: 1
+        profile-separator: '/'
+        default-context: common-secrets/qal
+        application-name: hierarchy-graph-maker/qal
+#      generic:
+#        enabled: false
+#        backend: cxsuite
+#        profile-separator: '/'
+##        default-context: common-secrets
+#        application-name: hierarchy-graph-maker
+      enabled: true
+      host: dev-vault.aws.foreseeresults.com
+      port: 8200
+      scheme: http
+#      namespace: cxsuite
+      authentication: APPROLE
+      app-role:
+        role-id: c95ba689-e397-0200-6edd-6f3826a0fa7c
+        secret-id: 08c5e486-c1d9-7720-707d-475f41f89eea
+#        role: my-role
+#        app-role-path: approle
+#        role: hierarchy-graph-maker
 #  cloud:
 #    config:
 #      fail-fast: true
@@ -26,6 +65,11 @@ spring:
 #      enabled: false
 #      import-check.enabled: false
 
+app:
+  vault-paths:
+    - cxsuite/common-secrets/qal
+    - cxsuite/${spring.application.name}/qal
+
 server:
   servlet:
     contextPath: /${spring.application.name}
@@ -41,4 +85,7 @@ management:
 
 ## fixme
 logging:
-  config: classpath:log4j2-aws.xml
+#  config: classpath:log4j2-aws.xml
+
+  level:
+    root: INFO
