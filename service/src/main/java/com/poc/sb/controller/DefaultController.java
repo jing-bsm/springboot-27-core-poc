@@ -36,6 +36,7 @@ public class DefaultController {
                 System.out.println(environment.containsProperty("hierarchy.graph.username"));
                 System.out.println("Username: " + graphProperties.getUsername());
                 System.out.println("Password: " + graphProperties.getPassword());
+                System.out.println("Props from dev-config: " + environment.getProperty("hierarchy.graph.url"));
                 try {
                     Thread.sleep(2000L);
                 } catch (InterruptedException e) {
